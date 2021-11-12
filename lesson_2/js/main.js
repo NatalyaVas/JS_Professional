@@ -23,8 +23,7 @@ class ProductList {
     }
 
     getSum() {
-        let res = this.goods.reduce((sum, item) => sum + item.price, 0); 
-        alert(res);
+        let res = this.goods.reduce((sum, item) => sum + item.price, 0);
     }
 
     render() { 
@@ -38,8 +37,8 @@ class ProductList {
 
 class ProductItem {
     constructor(product, img='img/prod_1.png') { 
-        this.title = product.title;
-        this.id = product.id;
+        this.title = product.product_name;
+        this.id = product.id_product;
         this.price = product.price;
         this.img = img;
     }
@@ -81,6 +80,7 @@ class Cart {
     constructor(container='.cart-block') {
         this.container = container; 
         this.goods = [];
+        this._showCart();
         this._getCartBlock() 
             .then(data => { 
                 this.goods = data.contents; 
@@ -89,7 +89,6 @@ class Cart {
     }
 
     _getCartBlock(){ 
-
         return fetch(`${API}/getBasket.json`) 
             .then(result => result.json()) 
             .catch(error => { 
@@ -100,25 +99,28 @@ class Cart {
     render() { 
         const block = document.querySelector(this.container); 
         for(let product of this.goods) { 
-            const item = new CartItem(product); 
-            block.insertAdjacentHTML('beforeend', item.render());
+            const item = new CartItem(); 
+            block.insertAdjacentHTML('beforeend', item.render(product));
         }
     }
-}
 
-class CartItem {
-    constructor(product, img='img/prod_1.png') { 
-        this.title = product.title;
-        this.id = product.id;
-        this.price = product.price;
-        this.img = img;
+    _showCart() {
+        document.querySelector('.btn-cart').addEventListener('click', () => {
+            document.querySelector(this.container).classList.toggle('hidden');//toggle - если класс был, то он будет удален, а если не было, то добавлен.
+        });
     }
-    render() {
-        return `<div class="product-item">
-                 <h3>${this.title}</h3>
-                 <img src = ${this.img}>
-                 <p>${this.price}</p>
-                 <button class="buy-btn">Купить</button>
+}
+class CartItem {
+    render(product, img='img/prod_1.png') {
+        return `<div class="cart-item">
+                 <img class="cart-img" src = ${img}>
+                 <div class="cart-text">
+                    <h3 class="product-title">${product.product_name}</h3>
+                    <p class="cart-price">${product.price}</p>
+                    <p class="product-quantity">Количество:${product.quantity}</p>
+                </div>
              </div>`
     };
 }
+
+new Cart();
