@@ -19,17 +19,8 @@ Two: 'I'll see you next time.'
 One: 'Sure. Bye.'`
 
 // console.log(arr.replace(/'/g,'"')); //заменим все кавычки на двойные
-// console.log(arr.replace(/([А-Я]+['][а-я]{1})'/gm, '\''));
-// console.log(arr.replace(/\B'\B/),'"');
-// let rool = /\S'\S//i;
-    // console.log(rool.test(str));
-// console.log(arr.replace(/'$/gm,'"')); это работает
-// console.log(arr.replace(/^{3}(:)\s'/gm,' "')); 
 
-// console.log(arr.replace(/'$/gm,'"')); //это работает
-// console.log(arr.replace(/^(One:)\s'/gm,'One: "')); //это работает
-
-console.log(arr.replace(/^(One:)\s'/gm,'One: "').replace(/'$/gm,'"').replace(/^(Two:)\s'/gm,'Two: "')); //это работает
+console.log(arr.replace(/^(One:)\s'/gm,'One: "').replace(/'$/gm,'"').replace(/^(Two:)\s'/gm,'Two: "'));
 
 
 
