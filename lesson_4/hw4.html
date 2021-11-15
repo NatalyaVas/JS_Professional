@@ -18,12 +18,9 @@ One: 'That's great. Well, you better get going. You don't want to be late.'
 Two: 'I'll see you next time.'
 One: 'Sure. Bye.'`
 
+console.log(arr.replace(/\B'/g, '"'));
+
 // console.log(arr.replace(/'/g,'"')); //заменим все кавычки на двойные
-
-console.log(arr.replace(/^(One:)\s'/gm,'One: "').replace(/'$/gm,'"').replace(/^(Two:)\s'/gm,'Two: "'));
-
-
-
-
+// console.log(arr.replace(/^(One:)\s'/gm,'One: "').replace(/'$/gm,'"').replace(/^(Two:)\s'/gm,'Two: "')); Очень длинный способ, но работает
 
 </script>
