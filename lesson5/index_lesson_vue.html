@@ -1,0 +1,106 @@
+<div id="app">
+    <div v-for="item of products">
+        <p>Название товара: {{ item.title }}</p>
+        <p>Стоимость товара: {{ item.price }}</p>
+        <p>Общая стоимость с учетом количества: {{ item.quantity * item.price }}</p>
+        <img width="200" :src="item.img" :alt="item.title"><hr>
+        <button @click="addProduct(item)">Купить</button>
+    </div>
+
+    <!-- Цикл v-for похож на forEach в js -->
+    <h1>Привет, {{ name }}</h1>
+    <!-- Для вывода свойств data используем двойные фигурные скобки "усатый синтаксис" -->
+    <h1>{{ sayHello()}}</h1>
+    <a :href="link">Перейти в поисковик</a> 
+    <!-- При передачи атрибута нужно добавить :, иначе не будет работать -->
+    
+    <!-- <button v-on:click="counter++">ОК</button> -->
+    <!-- v-on - Vue включи обработку клика. По клику на кнопку выполняем счетчик -->
+    <button @click="counter++">ОК</button>
+    <!-- Можно для клика использовать @, это и означает клик -->
+    <span>{{ counter }}</span>
+    <!-- Выведем значение countner под кнопкой -->
+    <!-- <h2 v-if="show">Text is visible</h2> 
+     В условиях указано show = false, поэтому здесь не надо писать show == true. Кроме того, по умолчанию всегда true
+    <h2 v-else="show">Text is not visible</h2>
+    <button @click="show=!show">Show(Hide)</button> 
+    show=!show меняет циклично визибл на не визибл. В нашем магазине можно применить в корзине -->
+
+    <!-- Более оптимальный вариант -->
+    <div v-show="show">
+        <h2 v-if="show">Text is visible</h2> 
+        <h2 v-else="show">Text is not visible</h2>
+    </div>
+    <button @click="show=!show">Show(Hide)</button>
+    
+    <p>{{ counter > 10 ? 'Больше 10' : 'Меньше либо равно 10' }}</p>
+    <!-- Классический тернарный оператор: если каунтер больше 10 ("?" это if) выводим сообщение "больше 10", иначе (":" это else) -->
+    <p @mousemove="getCoordinates()">Some long long text {{ x }} / {{ y }}
+    <!-- Регистрируем событие mousemove -->
+        <span @mousemove.stop>Текст, который не реагирует на движение мышкой</span>
+        <!-- В js можно остановить событие по removeeventlistener, а во вью - @mousemove.stop -->
+    </p>
+    <!-- <input type="text" v-model="name"> -->
+    <!-- Чтобы передать name, указываем v-model... Все,что введем в инпуте будет онлайн вводиться в приветствии. Лучше не использовать такой способ - нагружает сервер. -->
+
+    <input type="text" v-model.lazy="name">
+    <!-- Ввели в инпут имя, убрали фокус - имя появилось в приветствии -->
+
+    <div v-html="completeEl"></div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script> 
+<!-- //Чтобы подключить вью локально, нужно содержимое этой ссылки скопировать в отдельный файлик vue.js. И тогда эту ссылку заменить на vue.js -->
+<script>
+    const app = new Vue({ //Делаем объект класса Vue
+        el:'#app', //В качестве параметра указываем элемент el(название нельзя менять), с которым хотим организовать синхронизацию
+        data:{//Еще параметр. Все, что указар в верстке можно напрямую использовать в нашей верстке
+            name:'Иван',//Как вывести Иван на страничку? Смотри блок h1.
+            link: 'https:/google.com',
+            counter: 0, //Добавим свойство счетчик
+            forCounter:2,
+            show: false,
+            x:0,
+            y:0,
+            completeEl: '<a href="https:/google.com">Google</a>', //можно вставить любую верстку, см.выше
+            products:[
+                {
+                    title: 'Audi',
+                    price: 1000,
+                    quantity: 3,
+                    img: 'img/fasad.jpg'
+                },
+                {
+                    title: 'BMW',
+                    price: 1000,
+                    quantity: 3,
+                    img: 'img/fasad.jpg'
+                },
+                {
+                    title: 'Mersedes',
+                    price: 1000,
+                    quantity: 3,
+                    img: 'img/fasad.jpg'
+                },
+            ]
+         },
+         methods:{
+             sayHello(){
+                 return `Добрый день, ${this.name}` //В этом методе вернем слова. Если мы хотим обращаться к data, то нужно указать this
+             },
+             increase(step){ //Запишем функцию
+                this.counter += step; //Увеличиваем наш counter. Тогда при клике на кнопку ок запускать нужно increase.     <button @click="increase(3)">ОК</button>
+                // Если поставим increase(2), то счетчик будет прибавлять на 2
+
+             },
+             getCoordinates(){ // наша функция запускает событие mousemove, а если запускает событие, то можно использовать event
+                this.x = event.clientX; //присвоили координаты, указанные в data
+                this.y = event.clientY;
+             },
+             addProduct(item) {
+                 let itemCart = Object.assign(item,{quantity:1});//Так можно создавать наши товары для корзины. Объект товара каталога item передали. Т.е. мы из двух объектов сделали новый объект - товар корзины.  
+                 alert(`Вы купили товар ${item.title}`);
+             }
+         }
+    })
+</script>
