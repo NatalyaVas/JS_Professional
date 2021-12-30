@@ -13,7 +13,7 @@ const app = new Vue({
         imgCart: 'https://placehold.it/50x100',
         products: [],
         imgProduct: 'https://placehold.it/200x150',
-        error: false
+        dataError: false
     },
     methods: {
         getJson(url){

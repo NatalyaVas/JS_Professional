@@ -26,6 +26,8 @@
             :img="imgCart"
             :visibility="showCart"></cart>
 
+            <error-data v-if='dataError'></error-data>
+
         </div>
         
     </header>
@@ -38,6 +40,7 @@
 <script src="js/ProductComponent.js"></script>
 <script src="js/CartComponent.js"></script>
 <script src="js/FilterComponent.js"></script>
+<script src="js/GetDataErrorComponent.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>
